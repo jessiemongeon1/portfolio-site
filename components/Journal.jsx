@@ -1,3 +1,5 @@
+const { useState, useEffect, useRef } = React;
+
 const JOURNAL_POSTS = [
   {
     id: "p1",
@@ -139,4 +141,68 @@ function JournalReader({ post, onClose }) {
   useEffect(() => {
     document.body.style.overflow = "hidden";
     return () => { document.body.style.overflow = ""; };
-  },
+  }, []);
+
+  useEffect(() => {
+    const el = bodyRef.current;
+    if (!el) return;
+    const onScroll = () => {
+      const pct = Math.min(1, Math.max(0, el.scrollTop / (el.scrollHeight - el.clientHeight)));
+      setProgress(pct);
+    };
+    el.addEventListener("scroll", onScroll);
+    return () => { el.removeEventListener("scroll", onScroll); };
+  }, [post]);
+
+  useEffect(() => {
+    const onKey = (e) => { if (e.key === "Escape") onClose(); };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [onClose]);
+
+  return (
+    <div className="reader-overlay" role="dialog" aria-modal="true">
+      <div className="reader-progress" style={{ transform: `scaleX(${progress})` }} />
+      <div className="reader-bar">
+        <button className="reader-close" onClick={onClose} aria-label="Close">
+          <span>✕</span> Close
+        </button>
+        <div className="reader-bar-title">{post.tag} · {post.date}</div>
+        <div className="reader-bar-right">{Math.round(progress * 100)}%</div>
+      </div>
+
+      <article className="reader-body" ref={bodyRef}>
+        <div className="reader-inner">
+          <div className="reader-meta">
+            <span className="eyebrow">{post.tag}</span>
+            <span>·</span>
+            <span>{post.date}</span>
+            <span>·</span>
+            <span>{post.read}</span>
+          </div>
+          <h1 className="reader-title">{post.title}</h1>
+          <p className="reader-dek">{post.dek}</p>
+          <div className="asterism"><span>✦</span><span>✦</span><span>✦</span></div>
+          <div className="reader-prose">
+            {post.body.map((para, i) => (
+              <p key={i} className={i === 0 ? "lede" : ""}>
+                {i === 0 ? (
+                  <>
+                    <span className="dropcap">{para.charAt(0)}</span>
+                    {para.slice(1)}
+                  </>
+                ) : para}
+              </p>
+            ))}
+          </div>
+          <div className="asterism"><span>✦</span><span>✦</span><span>✦</span></div>
+          <p className="reader-sig">— J.M.</p>
+        </div>
+      </article>
+    </div>
+  );
+}
+
+window.Journal = Journal;
+window.JournalReader = JournalReader;
+window.JOURNAL_POSTS = JOURNAL_POSTS;
