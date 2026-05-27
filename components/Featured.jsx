@@ -2,12 +2,11 @@ function Featured() {
   return (
     <section id="featured" className="featured container">
       <div className="featured-head">
-        <span className="eyebrow">Featured essay</span>
+        <span className="eyebrow">Featured work</span>
         <div className="asterism" style={{ margin: "12px 0 0", justifyContent: "flex-start" }}>
           <span>✦</span><span>✦</span><span>✦</span>
         </div>
       </div>
-
       <article className="featured-card">
         <div className="featured-media" aria-hidden="true">
           <svg viewBox="0 0 600 420" preserveAspectRatio="xMidYMid slice" className="featured-svg">
@@ -27,31 +26,31 @@ function Featured() {
               <circle cx="430" cy="140" r="60" fill="none" stroke="var(--ink)" strokeWidth="1" />
               <circle cx="430" cy="140" r="30" fill="none" stroke="var(--ink)" strokeWidth="1" />
               <line x1="60" y1="360" x2="540" y2="360" stroke="var(--ink)" strokeWidth="1" opacity=".4" />
-              <text x="60" y="340" fontFamily="var(--mono)" fontSize="10" fill="var(--ink-soft)" letterSpacing="2">FIG.&nbsp;02&nbsp;—&nbsp;CONSENSUS,&nbsp;OBSERVED</text>
+              <text x="60" y="340" fontFamily="var(--mono)" fontSize="10" fill="var(--ink-soft)" letterSpacing="2">FIG.&nbsp;02&nbsp;—&nbsp;DEVELOPER&nbsp;ONBOARDING,&nbsp;MAPPED</text>
             </g>
           </svg>
         </div>
-
         <div className="featured-body">
           <div className="featured-meta">
-            <span>Essay</span><span>·</span><span>28 min read</span><span>·</span><span>March 2026</span>
+            <span>Book</span><span>·</span><span>540 pages</span><span>·</span><span>2022</span>
           </div>
           <h2 className="featured-title">
-            The social life of <em>consensus</em>: what Byzantine generals whisper about at dinner.
+            The Ultimate Web3 <em>Pocket Guide</em>: everything the docs assume you already know.
           </h2>
           <p className="featured-dek">
-            A long look at why distributed systems are, underneath the math, <span className="swoosh">human arguments
+            A field guide to the full Web3 stack — protocols, wallets, consensus, storage, and the{" "}
+            <span className="swoosh">mental models
               <svg viewBox="0 0 200 20" preserveAspectRatio="none"><path d="M2,14 Q50,2 100,10 T198,8" stroke="currentColor" strokeWidth="3" fill="none" strokeLinecap="round" /></svg>
-            </span> held in unusually formal cages — and why the cage, not the argument, is the interesting part.
+            </span>{" "}
+            that make it click. Written for developers who are tired of tutorials that skip the hard parts.
           </p>
           <div className="featured-actions">
-            <a className="btn primary" href="#journal">Read the essay</a>
-            <span className="featured-pub">Originally in <em>Protocol Review</em>, Issue 14</span>
+            <a className="btn primary" href="https://www.amazon.com/stores/Jessie-Mongeon/author/B0BG9D7WZP" target="_blank" rel="noreferrer">View on Amazon</a>
+            <span className="featured-pub">Also by Jessie: <em>Mastering Web3 Documentation</em></span>
           </div>
         </div>
       </article>
     </section>
   );
 }
-
 window.Featured = Featured;
