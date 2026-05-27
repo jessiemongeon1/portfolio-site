@@ -1,9 +1,9 @@
 const READING = [
-  { title: "The Writing Life", author: "Annie Dillard", status: "re-reading", note: "The hand thinking at a different speed." },
-  { title: "Several Short Sentences About Writing", author: "Verlyn Klinkenborg", status: "on desk", note: "The best book on revision I own." },
-  { title: "A Swim in a Pond in the Rain", author: "George Saunders", status: "underlined heavily", note: "Generous, rigorous, warm." },
-  { title: "Seeing Like a State", author: "James C. Scott", status: "halfway", note: "Feels relevant to governance, somehow." },
-  { title: "The Dawn of Everything", author: "Graeber & Wengrow", status: "paused", note: "Enormous, in every direction." }
+  { title: "Docs for Developers", author: "Bharat Bhargava et al.", status: "on desk", note: "The closest thing to a standard the field has." },
+  { title: "Every Page is Page One", author: "Mark Baker", status: "re-reading", note: "Information architecture as a first principle." },
+  { title: "The Product Is Docs", author: "Splunk Documentation Team", status: "underlined heavily", note: "Honest about the operational reality of docs work." },
+  { title: "Making Work Visible", author: "Dominica DeGrandis", status: "halfway", note: "The invisible work problem, finally named." },
+  { title: "Team Topologies", author: "Skelton & Pais", status: "paused", note: "Thinking about how docs teams fit into the rest." }
 ];
 
 function Reading() {
@@ -14,7 +14,7 @@ function Reading() {
           <span className="eyebrow">Currently reading</span>
           <h2>On the nightstand.</h2>
           <p className="reading-blurb">
-            A slow, rotating pile. Updated when I remember. Recommendations warmly received, gently not acted upon.
+            A slow, rotating pile. Mostly technical writing, docs strategy, and team structure. Updated when I remember.
           </p>
         </div>
         <ul className="reading-list">
@@ -46,28 +46,26 @@ function Contact() {
         <div className="contact-grid">
           <div>
             <span className="eyebrow">Get in touch</span>
-            <h2>Working on something <em>worth reading</em>?</h2>
+            <h2>Building something that needs <em>great docs</em>?</h2>
             <p>
-              I take on a handful of writing projects each quarter — docs, launch essays, long-form editorial. The best way to reach me is a short email with what you're building and when.
+              I work with protocols, foundations, and developer-facing teams on docs strategy, onboarding, and technical education. The best way to reach me is a short email with what you're building and what's broken.
             </p>
             <a className="btn primary" href="mailto:hello@jessiemongeon.com">hello@jessiemongeon.com</a>
           </div>
           <div className="contact-meta">
             <ul>
-              <li><span className="k">Twitter / X</span><a href="#">@jessiewrites</a></li>
-              <li><span className="k">Bluesky</span><a href="#">jessie.bsky.social</a></li>
-              <li><span className="k">LinkedIn</span><a href="#">/in/jessiemongeon</a></li>
-              <li><span className="k">Mirror</span><a href="#">jessie.mirror.xyz</a></li>
-              <li><span className="k">RSS</span><a href="#">/feed.xml</a></li>
+              <li><span className="k">LinkedIn</span><a href="https://www.linkedin.com/in/jessie-mongeon/" target="_blank" rel="noreferrer">/in/jessie-mongeon</a></li>
+              <li><span className="k">Amazon</span><a href="https://www.amazon.com/stores/Jessie-Mongeon/author/B0BG9D7WZP" target="_blank" rel="noreferrer">Author page</a></li>
+              <li><span className="k">Twitter / X</span><a href="#">@jessie_mongeon</a></li>
+              <li><span className="k">GitHub</span><a href="#">/jessie-mongeon</a></li>
             </ul>
             <div className="contact-quote">
-              "She writes with the calm of someone who has already read the thread."
-              <span className="attrib">— a generous editor</span>
+              "The docs that drive adoption are the ones that reduce the distance between a developer's question and the answer."
+              <span className="attrib">— from Mastering Web3 Documentation</span>
             </div>
           </div>
         </div>
       </div>
-
       <footer className="footer">
         <div className="footer-row">
           <span>© 2026 Jessie Mongeon</span>
