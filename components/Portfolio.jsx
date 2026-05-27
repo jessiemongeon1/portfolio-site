@@ -1,83 +1,83 @@
 const CLIPPINGS = [
   {
     id: "c1",
-    pub: "CHAIN LEDGER QUARTERLY",
-    sub: "Vol. XII · Issue 03 · Winter 2025",
-    headline: "A plain-English tour of rollup economics",
-    excerpt: "Rollups have been explained, in aggregate, about ten million times. Most of those explanations begin at layer two. This one begins at the diner.",
-    kicker: "Feature · 4,200 words",
-    year: "2025",
+    pub: "MYSTEN LABS",
+    sub: "Builder Education · Developer Docs",
+    headline: "Getting started with Sui: your first Move module in 20 minutes",
+    excerpt: "Move is not Solidity. The sooner you stop mapping one to the other, the sooner the object model starts to make sense.",
+    kicker: "Tutorial · Developer Education",
+    year: "2026",
     accent: "blue",
     rot: -1.6,
     size: "tall"
   },
   {
     id: "c2",
-    pub: "PROTOCOL REVIEW",
-    sub: "Issue 14 · The Governance Number",
-    headline: "What the Byzantine generals whisper about at dinner",
-    excerpt: "There is a joke, inside the joke of the original problem, that the generals are not actually worried about the enemy. They are worried about each other.",
-    kicker: "Essay · 8,100 words",
-    year: "2026",
+    pub: "INTERNET COMPUTER",
+    sub: "ICP Developer Docs · DFINITY",
+    headline: "Chain Fusion, explained: how ICP talks to every other blockchain",
+    excerpt: "Most cross-chain bridges move assets. Chain Fusion moves computation. That distinction is either obvious or everything, depending on where you're standing.",
+    kicker: "Explainer · Developer Docs",
+    year: "2025",
     accent: "green",
     rot: 1.2,
     size: "wide"
   },
   {
     id: "c3",
-    pub: "FOUNDATION PRESS",
-    sub: "Launch memo · Internal / public",
-    headline: "Honey, a liquid staking primitive, in 900 words",
-    excerpt: "We built the thing. Here is what it does, in the voice of someone who is willing to be wrong in public about what matters.",
-    kicker: "Brand essay",
-    year: "2025",
+    pub: "SELF-PUBLISHED",
+    sub: "The Ultimate Web3 Pocket Guide · 540 pp.",
+    headline: "What a blockchain actually is, for people who are done pretending",
+    excerpt: "A shared ledger that no single entity controls, enforced by the network itself. Everything else is footnotes. Here are the footnotes.",
+    kicker: "Book · Reference",
+    year: "2022",
     accent: "blue",
     rot: -0.6,
     size: "sq"
   },
   {
     id: "c4",
-    pub: "THE MINNEAPOLIS READER",
-    sub: "Culture section · Sunday",
-    headline: "The last honest man on Crypto Twitter",
-    excerpt: "A profile of a pseudonymous developer who spent four years arguing, in good faith, with everyone, and emerged — improbably — with most of his friends.",
-    kicker: "Profile · 6,400 words",
-    year: "2025",
+    pub: "SELF-PUBLISHED",
+    sub: "Mastering Web3 Documentation",
+    headline: "Why your docs exist and still fail developers",
+    excerpt: "The information is there. The architecture isn't. A case-study-driven guide to the difference between documentation that exists and documentation that works.",
+    kicker: "Book · Technical Writing",
+    year: "2024",
     accent: "green",
     rot: 1.8,
     size: "tall"
   },
   {
     id: "c5",
-    pub: "DEVELOPER NOTES",
-    sub: "Quarterly digest · No. 09",
-    headline: "Writing SDKs that feel like writing",
-    excerpt: "A short argument that API design is, at its honest core, a prose discipline. And that the style guide is the architecture.",
-    kicker: "Talk → Essay",
-    year: "2024",
+    pub: "FILEBASE",
+    sub: "Whitepaper · Decentralized Storage",
+    headline: "Decentralized storage: the backbone of Web3",
+    excerpt: "IPFS is not a backup solution. It is an addressing system that makes content persistent without making any single server responsible for it.",
+    kicker: "Whitepaper · 3,800 words",
+    year: "2022",
     accent: "blue",
     rot: 0.8,
     size: "wide"
   },
   {
     id: "c6",
-    pub: "BLOCKWORKS",
-    sub: "Research brief",
-    headline: "On the unreasonable patience of validators",
-    excerpt: "They run the machines. They get yelled at on Discord. They are, against all odds, still here. A small taxonomy of the people who run the internet we forgot we built.",
-    kicker: "Brief · 2,200 words",
-    year: "2024",
+    pub: "FILEBASE",
+    sub: "eBook · Onboarding",
+    headline: "Migrating to Web3: a cheat sheet for developers who've been meaning to",
+    excerpt: "You don't have to abandon your S3 workflow. You just have to understand what you're pointing it at now, and why that changes the failure modes.",
+    kicker: "eBook · Developer Education",
+    year: "2023",
     accent: "green",
     rot: -1.2,
     size: "sq"
   },
   {
     id: "c7",
-    pub: "DECRYPT",
-    sub: "Explainer · Front page",
-    headline: "Account abstraction, for your mother",
-    excerpt: "She does not want to know about ERC-4337. She wants to know if she will lose her money. The second question is the only one worth answering first.",
-    kicker: "Explainer",
+    pub: "DFINITY",
+    sub: "ICP Developer Blog · Community Update",
+    headline: "Six months of user studies: what ICP developers actually need",
+    excerpt: "They didn't want more content. They wanted the content to stop hiding the answer three clicks from where they started.",
+    kicker: "Research Summary",
     year: "2024",
     accent: "blue",
     rot: 1.4,
@@ -85,12 +85,12 @@ const CLIPPINGS = [
   },
   {
     id: "c8",
-    pub: "THE INDEX",
-    sub: "Inaugural issue · Spring 2026",
-    headline: "A writer walks into a data availability layer",
-    excerpt: "Or: what happened when I spent six weeks living inside a protocol's internal Slack, and tried to leave with a readable paragraph.",
-    kicker: "Field report",
-    year: "2026",
+    pub: "HACK MIT",
+    sub: "Workshop · Live Presentation",
+    headline: "Building with Chain Fusion: a live walkthrough for people who just arrived",
+    excerpt: "A hackathon workshop has one job: get a developer to their first working thing before the energy in the room dies. Everything else is a distraction.",
+    kicker: "Talk · Workshop",
+    year: "2024",
     accent: "green",
     rot: -0.4,
     size: "wide"
@@ -99,7 +99,7 @@ const CLIPPINGS = [
 
 function Portfolio() {
   const [filter, setFilter] = React.useState("All");
-  const tags = ["All", "Essay", "Feature", "Brief", "Explainer", "Profile"];
+  const tags = ["All", "Tutorial", "Explainer", "Book", "Whitepaper", "Research", "Talk"];
   const filtered = CLIPPINGS.filter(c =>
     filter === "All" || c.kicker.toLowerCase().includes(filter.toLowerCase())
   );
@@ -107,12 +107,12 @@ function Portfolio() {
   return (
     <section id="portfolio" className="portfolio container">
       <div className="portfolio-head">
-        <span className="eyebrow">Clippings · Selected published work</span>
-        <h2>A small, tidy <span className="swoosh">pile of paper
+        <span className="eyebrow">Portfolio · Selected work</span>
+        <h2>Docs, books, and <span className="swoosh">field work
           <svg viewBox="0 0 200 20" preserveAspectRatio="none"><path d="M2,14 Q50,2 100,10 T198,8" stroke="currentColor" strokeWidth="3" fill="none" strokeLinecap="round" /></svg>
         </span>.</h2>
         <p className="portfolio-sub">
-          Pieces published in places that still print. Hover to lift a clipping off the desk.
+          Selected tutorials, whitepapers, books, and developer education across the Web3 stack. Hover to lift a clipping off the desk.
         </p>
         <div className="portfolio-filters">
           {tags.map(t => (
