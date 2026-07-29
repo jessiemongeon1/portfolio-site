@@ -3,7 +3,7 @@ function Featured() {
     <section id="featured" className="featured container">
       <div className="featured-head">
         <span className="eyebrow">Featured work</span>
-        <div className="asterism" style={{ margin: "12px 0 0", justifyContent: "flex-start" }}>
+        <div className="asterism" style={{ margin: "12px 0 0" }}>
           <span>✦</span><span>✦</span><span>✦</span>
         </div>
       </div>

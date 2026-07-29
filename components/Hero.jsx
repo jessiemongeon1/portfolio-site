@@ -66,11 +66,6 @@ function Hero() {
             <a className="btn" href="#portfolio">View portfolio</a>
           </div>
         </div>
-        <div className="blob blob-a" aria-hidden="true" />
-        <div className="blob blob-b" aria-hidden="true" />
-        <div className="hero-margin-note" aria-hidden="true">
-          <span>fig. 1 — a technical writer, somewhere in Austin, making complexity legible.</span>
-        </div>
       </div>
     </header>
   );

@@ -4,8 +4,6 @@ function About() {
       <div className="about-grid">
         <div className="about-photo">
           <div className="photo-frame">
-            <div className="tape" style={{ top: -10, left: 24 }} />
-            <div className="tape" style={{ bottom: -10, right: 18, transform: "rotate(5deg)", background: "color-mix(in oklch, var(--accent-2) 70%, transparent)" }} />
             <img className="portrait-placeholder" src="portrait.jpeg" alt="Portrait of Jessie Mongeon" />
           </div>
 
