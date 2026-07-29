@@ -3,9 +3,6 @@ function Featured() {
     <section id="featured" className="featured container">
       <div className="featured-head">
         <span className="eyebrow">Featured work</span>
-        <div className="asterism" style={{ margin: "12px 0 0" }}>
-          <span>✦</span><span>✦</span><span>✦</span>
-        </div>
       </div>
       <article className="featured-card">
         <div className="featured-media" aria-hidden="true">

@@ -1,7 +1,7 @@
 /* ============== HERO ============== */
 .hero {
   position: relative;
-  padding-bottom: 80px;
+  padding-bottom: 48px;
   overflow: hidden;
 }
 .hero-nav {
@@ -149,11 +149,11 @@
 .hero-margin-note { display: none; }
 
 /* ============== ABOUT ============== */
-.about { padding: 100px 0; }
+.about { padding: 48px 0; }
 .about-grid {
   display: grid;
   grid-template-columns: 340px 1fr;
-  gap: 72px;
+  gap: 48px;
   align-items: start;
 }
 .photo-frame {
@@ -220,7 +220,7 @@
 }
 
 /* ============== FEATURED ============== */
-.featured { padding: 80px 0; }
+.featured { padding: 48px 0; }
 .featured-head { margin-bottom: 32px; }
 .featured-card {
   display: grid;
@@ -285,7 +285,7 @@
 }
 
 /* ============== JOURNAL ============== */
-.journal { padding: 80px 0 100px; }
+.journal { padding: 48px 0; }
 .journal-head {
   display: grid;
   grid-template-columns: 1.3fr 1fr;
@@ -524,7 +524,7 @@
 }
 
 /* ============== READING LIST ============== */
-.reading { padding: 80px 0; }
+.reading { padding: 48px 0; }
 .reading-grid {
   display: grid;
   grid-template-columns: 1fr 1.4fr;
@@ -608,7 +608,7 @@
 }
 
 /* ============== PORTFOLIO / CLIPPINGS ============== */
-.portfolio { padding: 80px 0 120px; }
+.portfolio { padding: 48px 0; }
 .portfolio-head { margin-bottom: 48px; }
 .portfolio-head h2 {
   font-size: clamp(40px, 5.2vw, 76px);
@@ -774,7 +774,7 @@
 .clipping:hover .clipping-read { opacity: 1; transform: translateX(0); }
 
 /* ============== CONTACT ============== */
-.contact { padding: 40px 0 60px; }
+.contact { padding: 48px 0; }
 .contact-card {
   background: color-mix(in oklch, var(--accent) 35%, var(--paper));
   border: 1px solid var(--rule);
