@@ -8,7 +8,7 @@ function About() {
             <div className="tape" style={{ bottom: -10, right: 18, transform: "rotate(5deg)", background: "color-mix(in oklch, var(--accent-2) 70%, transparent)" }} />
             <img className="portrait-placeholder" src="portrait.jpeg" alt="Portrait of Jessie Mongeon" />
           </div>
-          <p className="caption">Photograph by someone kind, autumn 2024.</p>
+
         </div>
         <div className="about-copy">
           <span className="eyebrow">About</span>
