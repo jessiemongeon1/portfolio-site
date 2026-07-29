@@ -36,11 +36,11 @@ function Contact() {
           <aside className="contact-card">
             <div className="eyebrow">Elsewhere on the internet</div>
             <ul className="social-list">
-              <li><a href="#" onClick={e=>e.preventDefault()}><span>Twitter</span><span className="handle">@jessiewrites</span></a></li>
+              <li><a href="https://x.com/JessieWritesx" target="_blank" rel="noreferrer"><span>Twitter</span><span className="handle">@JessieWritesx</span></a></li>
               <li><a href="#" onClick={e=>e.preventDefault()}><span>Are.na</span><span className="handle">/jessie-mongeon</span></a></li>
               <li><a href="#" onClick={e=>e.preventDefault()}><span>Substack</span><span className="handle">thequietledger.substack.com</span></a></li>
               <li><a href="#" onClick={e=>e.preventDefault()}><span>LinkedIn</span><span className="handle">/in/jessiemongeon</span></a></li>
-              <li><a href="#" onClick={e=>e.preventDefault()}><span>GitHub</span><span className="handle">@jmongeon-docs</span></a></li>
+              <li><a href="https://github.com/jessiemongeon1" target="_blank" rel="noreferrer"><span>GitHub</span><span className="handle">@jessiemongeon1</span></a></li>
             </ul>
             <div className="contact-hours">
               <span className="eyebrow">Office hours</span>

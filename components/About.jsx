@@ -6,16 +6,7 @@ function About() {
           <div className="photo-frame">
             <div className="tape" style={{ top: -10, left: 24 }} />
             <div className="tape" style={{ bottom: -10, right: 18, transform: "rotate(5deg)", background: "color-mix(in oklch, var(--accent-2) 70%, transparent)" }} />
-            <svg className="portrait-placeholder" viewBox="0 0 300 380" preserveAspectRatio="xMidYMid slice">
-              <defs>
-                <pattern id="stripes" width="10" height="10" patternUnits="userSpaceOnUse" patternTransform="rotate(35)">
-                  <rect width="10" height="10" fill="var(--paper-2)" />
-                  <line x1="0" y1="0" x2="0" y2="10" stroke="var(--rule)" strokeWidth="1" />
-                </pattern>
-              </defs>
-              <rect width="300" height="380" fill="url(#stripes)" />
-              <text x="150" y="195" textAnchor="middle" fontFamily="var(--mono)" fontSize="11" letterSpacing="2" fill="var(--ink-mute)">[ PORTRAIT — 3:4 ]</text>
-            </svg>
+            <img className="portrait-placeholder" src="portrait.jpeg" alt="Portrait of Jessie Mongeon" />
           </div>
           <p className="caption">Photograph by someone kind, autumn 2024.</p>
         </div>

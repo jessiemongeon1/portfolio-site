@@ -56,8 +56,8 @@ function Contact() {
             <ul>
               <li><span className="k">LinkedIn</span><a href="https://www.linkedin.com/in/jessie-mongeon/" target="_blank" rel="noreferrer">/in/jessie-mongeon</a></li>
               <li><span className="k">Amazon</span><a href="https://www.amazon.com/stores/Jessie-Mongeon/author/B0BG9D7WZP" target="_blank" rel="noreferrer">Author page</a></li>
-              <li><span className="k">Twitter / X</span><a href="#">@jessie_mongeon</a></li>
-              <li><span className="k">GitHub</span><a href="#">/jessie-mongeon</a></li>
+              <li><span className="k">Twitter / X</span><a href="https://x.com/JessieWritesx" target="_blank" rel="noreferrer">@JessieWritesx</a></li>
+              <li><span className="k">GitHub</span><a href="https://github.com/jessiemongeon1" target="_blank" rel="noreferrer">/jessiemongeon1</a></li>
             </ul>
             <div className="contact-quote">
               "The docs that drive adoption are the ones that reduce the distance between a developer's question and the answer."
