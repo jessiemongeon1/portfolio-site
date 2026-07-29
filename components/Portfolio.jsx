@@ -132,12 +132,9 @@ function Portfolio() {
             className={`clipping clipping-${c.size} clipping-${c.accent}`}
             style={{ "--rot": `${c.rot}deg`, "--i": i }}
           >
-            <div className="tape tape-1" />
-            <div className="tape tape-2" />
             <div className="clipping-inner">
               <div className="masthead">
                 <div className="masthead-top">{c.pub}</div>
-                <div className="masthead-rule"><span /><span className="dot" /><span /></div>
                 <div className="masthead-sub">{c.sub}</div>
               </div>
               <h3 className="clipping-headline">{c.headline}</h3>
@@ -146,7 +143,6 @@ function Portfolio() {
                 <span>{c.kicker}</span>
                 <span className="dot" />
                 <span>{c.year}</span>
-                <span className="clipping-read">Read →</span>
               </div>
             </div>
           </article>
