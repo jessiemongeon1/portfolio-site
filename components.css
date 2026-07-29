@@ -80,12 +80,12 @@
 }
 
 .hero-headline {
-  font-size: clamp(36px, 5vw, 56px);
-  line-height: 1.1;
-  letter-spacing: -0.035em;
+  font-size: clamp(32px, 4vw, 48px);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
   margin: 0 0 16px;
   font-weight: 480;
-  max-width: 640px;
+  max-width: 100%;
   font-variation-settings: "SOFT" 80, "opsz" 144;
 }
 .hero-headline em {
