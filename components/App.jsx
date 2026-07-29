@@ -78,9 +78,7 @@ function App() {
       <Hero />
       <div className="fade-up"><About /></div>
       <div className="fade-up"><Featured /></div>
-      <div className="asterism container"><span>✦</span><span>✦</span><span>✦</span></div>
       <div className="fade-up"><Portfolio /></div>
-      <div className="asterism container"><span>✦</span><span>✦</span><span>✦</span></div>
       <div className="fade-up"><Journal onOpen={setOpenPost} /></div>
       <div className="fade-up"><Reading /></div>
       <div className="fade-up"><Contact /></div>

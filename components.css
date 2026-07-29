@@ -267,10 +267,6 @@
 /* ============== JOURNAL ============== */
 .journal { padding: 48px 0; }
 .journal-head {
-  display: grid;
-  grid-template-columns: 1.3fr 1fr;
-  gap: 40px;
-  align-items: end;
   margin-bottom: 24px;
 }
 .journal-head h2 {
@@ -281,12 +277,9 @@
 }
 .journal-sub {
   color: var(--ink-soft);
-  max-width: 42ch;
-  font-size: 18px;
-  margin: 0;
-}
-@media (max-width: 820px) {
-  .journal-head { grid-template-columns: 1fr; gap: 16px; }
+  max-width: 60ch;
+  font-size: 17px;
+  margin: 8px 0 0;
 }
 .journal-list { list-style: none; padding: 0; margin: 0; }
 .journal-row { border-top: 1px solid var(--rule); }
