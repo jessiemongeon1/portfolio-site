@@ -84,14 +84,14 @@
   line-height: 0.96;
   letter-spacing: -0.035em;
   margin: 0 0 36px;
-  font-weight: 420;
+  font-weight: 480;
   font-variation-settings: "SOFT" 80, "opsz" 144;
 }
 .hero-headline .line-1 { display: block; }
 .hero-headline .line-2 {
   display: block;
   padding-left: clamp(30px, 8vw, 140px);
-  color: var(--ink-soft);
+  color: var(--ink);
 }
 .hero-headline em {
   font-style: italic;
@@ -101,12 +101,12 @@
 
 .hero-sentence {
   font-family: var(--serif-display);
-  font-weight: 380;
+  font-weight: 420;
   font-size: clamp(18px, 2.1vw, 26px);
   line-height: 1.5;
   max-width: 640px;
   margin: 0 0 56px;
-  color: var(--ink-soft);
+  color: var(--ink);
   min-height: 3em;
 }
 .caret {
@@ -175,7 +175,7 @@
   font-size: 10px;
   letter-spacing: 0.2em;
   color: var(--ink-mute);
-  opacity: 0.7;
+  opacity: 0.85;
 }
 
 /* ============== ABOUT ============== */
