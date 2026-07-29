@@ -32,20 +32,20 @@ function Featured() {
         </div>
         <div className="featured-body">
           <div className="featured-meta">
-            <span>Book</span><span>·</span><span>540 pages</span><span>·</span><span>2022</span>
+            <span>Book</span><span>·</span><span>2026 Edition</span>
           </div>
           <h2 className="featured-title">
-            The Ultimate Web3 <em>Pocket Guide</em>: everything the docs assume you already know.
+            The Ultimate Web3 <em>Pocket Guide</em>: 2026 edition — updated for everything that's changed.
           </h2>
           <p className="featured-dek">
-            A field guide to the full Web3 stack — protocols, wallets, consensus, storage, and the{" "}
+            The fully revised 2026 edition of the field guide to the Web3 stack — protocols, wallets, consensus, storage, and the{" "}
             <span className="swoosh">mental models
               <svg viewBox="0 0 200 20" preserveAspectRatio="none"><path d="M2,14 Q50,2 100,10 T198,8" stroke="currentColor" strokeWidth="3" fill="none" strokeLinecap="round" /></svg>
             </span>{" "}
-            that make it click. Written for developers who are tired of tutorials that skip the hard parts.
+            that make it click. Rewritten and expanded to cover the current landscape, for developers who are tired of tutorials that skip the hard parts.
           </p>
           <div className="featured-actions">
-            <a className="btn primary" href="https://www.amazon.com/stores/Jessie-Mongeon/author/B0BG9D7WZP" target="_blank" rel="noreferrer">View on Amazon</a>
+            <a className="btn primary" href="https://www.amazon.com/Ultimate-Web3-Pocket-Guide-Second-ebook/dp/B0GZWHD6DZ" target="_blank" rel="noreferrer">View on Amazon</a>
             <span className="featured-pub">Also by Jessie: <em>Mastering Web3 Documentation</em></span>
           </div>
         </div>
