@@ -1,6 +1,6 @@
 function Contact() {
   const [copied, setCopied] = React.useState(false);
-  const email = "jessie@jessiemongeon.ink";
+  const email = "jessie.writes.docs@gmail.com";
 
   const copy = () => {
     navigator.clipboard?.writeText(email);

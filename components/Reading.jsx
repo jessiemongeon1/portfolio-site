@@ -50,7 +50,7 @@ function Contact() {
             <p>
               I work with protocols, foundations, and developer-facing teams on docs strategy, onboarding, and technical education. The best way to reach me is a short email with what you're building and what's broken.
             </p>
-            <a className="btn primary" href="mailto:hello@jessiemongeon.com">hello@jessiemongeon.com</a>
+            <a className="btn primary" href="mailto:jessie.writes.docs@gmail.com">jessie.writes.docs@gmail.com</a>
           </div>
           <div className="contact-meta">
             <ul>
