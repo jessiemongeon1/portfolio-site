@@ -39,18 +39,7 @@ function Hero() {
           <span className="dot" /> <span className="eyebrow">Technical Writer · Web3 &amp; AI · Builder Education ·&nbsp;est.&nbsp;2021</span>
         </div>
         <h1 className="hero-headline">
-          <span className="line-1">
-            <span className="swoosh">
-              Docs
-              <svg viewBox="0 0 200 20" preserveAspectRatio="none">
-                <path d="M2,14 Q50,2 100,10 T198,8" stroke="currentColor" strokeWidth="3" fill="none" strokeLinecap="round" />
-              </svg>
-            </span>{" "}
-            that help
-          </span>
-          <span className="line-2">
-            builders <em>actually</em> build.
-          </span>
+          Docs that help builders <em>actually</em> build.
         </h1>
         <p className="hero-sentence">
           {typed}

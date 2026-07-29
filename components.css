@@ -87,12 +87,6 @@
   font-weight: 480;
   font-variation-settings: "SOFT" 80, "opsz" 144;
 }
-.hero-headline .line-1 { display: block; }
-.hero-headline .line-2 {
-  display: block;
-  padding-left: 0;
-  color: var(--ink);
-}
 .hero-headline em {
   font-style: italic;
   color: var(--green-ink);
@@ -121,24 +115,23 @@
 
 .hero-meta {
   display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  gap: 40px;
+  align-items: center;
+  gap: 20px;
   flex-wrap: wrap;
 }
 .meta-card {
   display: flex;
   flex-direction: column;
   gap: 6px;
-  padding: 14px 18px;
+  padding: 10px 16px;
   background: var(--paper-2);
   border: 1px solid var(--rule);
   border-radius: 4px;
-  max-width: 360px;
   transform: none;
   position: relative;
   font-family: var(--serif-body);
   font-style: normal;
+  font-size: 15px;
 }
 .meta-actions { display: flex; gap: 14px; flex-wrap: wrap; }
 
