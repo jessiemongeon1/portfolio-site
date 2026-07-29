@@ -3,19 +3,19 @@
    Type: Fraunces (display) + Source Serif 4 (body) */
 
 :root {
-  --paper: #f6f2ea;
-  --paper-2: #efe8d9;
-  --ink: #1a1a1d;
-  --ink-soft: #363639;
-  --ink-mute: #5a5a63;
-  --rule: #d9d1bf;
+  --paper: #ffffff;
+  --paper-2: #f0f0f0;
+  --ink: #111111;
+  --ink-soft: #222222;
+  --ink-mute: #444444;
+  --rule: #cccccc;
 
-  --blue: oklch(0.88 0.04 230);
-  --blue-2: oklch(0.82 0.05 230);
-  --blue-ink: oklch(0.45 0.08 230);
-  --green: oklch(0.89 0.05 160);
-  --green-2: oklch(0.83 0.06 160);
-  --green-ink: oklch(0.42 0.07 160);
+  --blue: oklch(0.92 0.03 230);
+  --blue-2: oklch(0.86 0.04 230);
+  --blue-ink: oklch(0.30 0.10 230);
+  --green: oklch(0.92 0.04 160);
+  --green-2: oklch(0.86 0.05 160);
+  --green-ink: oklch(0.28 0.09 160);
 
   --accent: var(--blue);
   --accent-2: var(--green);
