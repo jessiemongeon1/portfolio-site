@@ -201,6 +201,7 @@
   height: auto;
   display: block;
   aspect-ratio: 3/4;
+  object-fit: cover;
 }
 .caption {
   text-align: center;
