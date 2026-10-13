@@ -2,6 +2,199 @@ const { useState, useEffect, useRef } = React;
 
 const JOURNAL_POSTS = [
   {
+    id: "p8",
+    title: "Agent skills: what the standard says, what the benchmarks found, and how to evaluate one",
+    dek: "A report on skill design and evaluation: the SKILL.md standard, three benchmarks, the practitioner write-ups, and a year of my own eval data.",
+    tag: "Evaluation",
+    date: "Oct 13, 2026",
+    read: "23 min",
+    accent: "green",
+    body: [
+      "Agent skills are short files an AI agent loads when a task matches them. Over the last week I read the standard, Anthropic's authoring guidance, the three benchmarks that have measured skills at scale, and the practitioner write-ups, and I compared all of it against a year of my own eval data. This is what holds up.",
+      "## Summary",
+      "A good skill is a short, procedural file that loads only when it should, written against a measured gap and kept honest by a paired, repeated, held-out evaluation. Ten findings carry most of the weight:",
+      "1. **Measure first, write second.** Run the model with no skill, write evals from what it got wrong, and write only enough to pass them. Anthropic's guidance and the SkillsBench benchmark both treat the paired comparison as the foundation.",
+      "2. **Shorter wins.** Compact and standard-length skills lift pass rates 17 to 21 points; comprehensive manuals lift under one point or lower it. Every paragraph has to pay for its tokens.",
+      "3. **The description is the product.** It is the only thing the agent sees before choosing. One practitioner reports 50% improvements from the description alone. Third person, what plus when, the request's own keywords, non-overlapping with its neighbours.",
+      "4. **Libraries fail by selection, not by size.** Databricks measured a 21-point drop at 202 skills; about 14 of it was picking the wrong skill or none, and that was the only significant effect. My onboarding suite reproduced it on 43 skills: all skills loaded scored below no skill on 58 of 89 prompts.",
+      "5. **Skills can hurt.** 16 of 84 SkillsBench tasks went negative, one by 39 points. The usual cause is a relevant skill turning guidance into mandatory work. Evaluate every question of the suite, not the ones the edit targeted.",
+      "6. **Self-written skills do not work without an eval.** Model-generated skills averaged minus 1.3 points and minus 8.1 on one harness. A generator earns its keep only when a held-out split is the arbiter; mine gave opposite verdicts on two runs of the same page.",
+      "7. **The format that travels is `evals.json`:** prompts with verifiable expectations, graded with and without the skill, plus a separate trigger set of should and should-not prompts.",
+      "8. **A judge, not a keyword matcher,** decides an expectation, and the judge is calibrated against people, pinned, and used one dimension at a time. Term matching passed 8 of 19 expectations my judge rejected on one skill.",
+      "9. **Three attempts is the floor,** with pass@k and pass^k both reported, a confidence interval on every rate, a noise floor measured before any lift is claimed, and a movement threshold set in advance. Between 18 and 53 of 158 questions change answer between attempts on my board.",
+      "10. **Hold a third out and gate the merge.** Iterate on the training split, score the held-out split once, ship when it is within noise and nothing moved down, retire a capability skill once the baseline passes.",
+      "## What a skill is",
+      "A skill is a folder with a `SKILL.md` whose frontmatter every agent loads at startup and whose body loads only when the agent decides the skill applies. The format is an open standard published at agentskills.io. Anthropic's engineering write-up calls it an onboarding guide for a new hire and distinguishes it from a tool (a discrete function) and from an MCP server (an integration): a skill carries procedural knowledge and organisational context.",
+      "| Frontmatter field | Required | Constraint |",
+      "| --- | --- | --- |",
+      "| `name` | Yes | 1 to 64 chars, lowercase letters, digits and hyphens, must match the directory name |",
+      "| `description` | Yes | 1 to 1,024 chars. What the skill does and when to use it, in the third person, with the keywords a task would contain |",
+      "| `license` | No | A licence name or a bundled file |",
+      "| `compatibility` | No | Up to 500 chars of environment needs. Most skills omit it |",
+      "| `metadata` | No | String-to-string map for anything the spec does not define |",
+      "| `allowed-tools` | No | Space-separated pre-approved tools. Experimental |",
+      "The body is free Markdown. The spec recommends step-by-step instructions, input and output examples, and edge cases, with anything long moved to `references/`, executable code in `scripts/`, and templates or data in `assets/`.",
+      "**Progressive disclosure is the whole design.** Three levels, each paid for only when reached:",
+      "| Level | What loads | When | Cost |",
+      "| --- | --- | --- | --- |",
+      "| Metadata | `name` and `description` of every installed skill | At startup, into the system prompt | About 100 tokens per skill |",
+      "| Instructions | The `SKILL.md` body | When the agent decides the skill is relevant | Under 5,000 tokens recommended; under 500 lines |",
+      "| Resources | Referenced files, scripts, assets | Only when the body points the agent at them | Nothing until read; scripts run without being read at all |",
+      "In Claude's runtime the agent reads `SKILL.md` with its file tools, follows links one level deep, and executes scripts through bash so that only their output costs tokens. That is why a skill can bundle a complete API reference or a large dataset at no cost to the tasks that never touch it, and why the same file pasted into a system prompt would be a different, worse thing.",
+      "## Designing a skill",
+      "The strongest finding across every source is that focused, procedural skills beat comprehensive ones. SkillsBench grouped its curated skills by length: in the paper's published table, detailed skills lifted pass rate by 18.8 points, compact by 17.1, standard by 10.1, and comprehensive manuals lowered it by 2.9. Arize's analysis of a later revision reports compact 19.0, standard 21.5, detailed 14.5 and comprehensive 0.7. The two revisions disagree on the middle of the range and agree on the ends: a manual that tries to cover the domain adds nothing. Anthropic's guidance turns this into a test for every paragraph: does the model really need this explanation, can I assume it knows this, does this paragraph justify its token cost. Its worked example is a 50-token extraction snippet against a 150-token version that explains what a PDF is.",
+      "**What to put in, and at what level of control.** Match the specificity to how fragile the task is. The guidance's image is a robot on a path: a narrow bridge gets exact instructions, an open field gets a direction.",
+      "| Freedom | Form | Use when | Example |",
+      "| --- | --- | --- | --- |",
+      "| High | Prose heuristics | Several approaches are valid and context decides | A code review checklist |",
+      "| Medium | A template or a script with parameters | A preferred pattern exists, some variation is fine | A report generator with format flags |",
+      "| Low | One exact script, no parameters | The operation is fragile, order matters, consistency is critical | Run exactly `scripts/migrate.py --verify --backup`. Do not add flags |",
+      "PostHog's version of the same rule, from writing skills for their own agents: be precise about goals, ambiguous about steps, because a skill that scripts every step breaks the moment the repo doesn't match what the skill expects.",
+      "**Structure the folder for disclosure, not completeness.**",
+      "- `SKILL.md` is a table of contents with the quick start inline and everything else linked. Keep it under 500 lines.",
+      "- Keep references one level deep. The agent previews nested files with partial reads and misses the rest. Give any reference over 100 lines its own table of contents so a partial read still shows the scope.",
+      "- Split references by domain so a sales question never loads finance schemas.",
+      "- Put deterministic work in scripts the agent executes rather than code it generates: more reliable, zero context cost, consistent across uses. Say whether a script is to be run or read as reference. Scripts should solve errors rather than defer them to the model, and every constant should say why it has its value.",
+      "- Red Hat's split is scripts for the mechanical layer and SKILL.md for the reasoning layer; applying it to a root-cause-analysis skill cut cost 26% at the same accuracy.",
+      "**Patterns that measurably help.**",
+      "- Workflows as checklists the agent copies into its response and ticks off, so validation steps are not skipped.",
+      "- Feedback loops: run a validator, fix, repeat, and only proceed when validation passes. For batch or destructive changes, plan-validate-execute: write a plan file, validate it with a script that names what is wrong, then apply.",
+      "- One default with an escape hatch, never a menu.",
+      "- Input and output examples where style matters; templates whose strictness matches the need.",
+      "- Consistent terminology. No dates that go stale; keep an old-patterns section in a collapsed block instead.",
+      "**Know which kind of skill you are writing.** A capability skill fills a gap in what the model knows and should be retired once evals pass without it; a preference skill encodes how your team does things and is durable. SkillsBench's analysis says skills earn the most where they encode judgment or workflow the model is unlikely to recover from general pretraining alone: internal conventions, regulated workflows, brittle APIs. Restating familiar advice adds little and can displace a better default the model already had.",
+      "**Keep it from rotting.** Separate durable structure from volatile content, point at a single source of truth such as the docs rather than copying it, and regenerate skills rather than patching them. Then the ordinary rules for code: version, test, gate merges on the eval suite, review by pull request, keep a rollback.",
+      "## The description is the router",
+      "The description is the only part of a skill the agent sees before deciding to use it, so it is a trigger, not documentation, and it is where most of the leverage is. Philipp Schmid reports 50% improvements just by improving the description, with no change to the body; Anthropic's skill-creator calls descriptions the primary triggering mechanism and notes that the model tends to under-trigger, so a description should be pushy.",
+      "**What a description has to do.** Say what the skill does and when to use it, in the third person, with the words a matching request would contain. Anthropic's examples pair a capability clause with a trigger clause: extract text and tables from PDF files, fill forms, merge documents; use when working with PDF files or when the user mentions PDFs, forms, or document extraction. The failures are symmetric: too vague and the skill never fires, too broad and it fires for everything. Point of view matters because the text is injected into the system prompt. Claude Code adds an optional `when_to_use` field, appended to the description for the routing decision, with the pair capped at 1,536 characters.",
+      "**Routing degrades with library size, and the cause is selection, not context.** Databricks measured it directly on SkillsBench tasks with libraries of 52, 102 and 202 skills on two models, 2,545 trajectories. At 202 skills the pass rate fell about 21 points against loading only the right skill. Decomposed, skill shadowing (picking the wrong skill, or none) accounted for about 14 points and was the only statistically significant effect; the extra context cost about 7 points and was indistinguishable from zero. A wrong skill is worse than no skill because it injects plausible but incorrect reasoning into the context. The SkillComposer work reaches the same place from the other side: on a large library, a task-conditioned subset beat loading everything on both accuracy and tokens, and matched the gold-skill upper bound. Red Hat's practical ceiling is one to three skills per task.",
+      "**So test the trigger as its own eval.** The skill-creator's loop: write 20 realistic queries, a mix that should and should not fire; split 60% train, 40% held out; run each query three times to get a trigger rate; propose a description change; stop after at most five rounds and keep the best description on the held-out set.",
+      "**What the router cannot fix.** Three quarters of the public skill corpus is badly described: a scan of 55,315 published skills found 26.4% with no routing description at all and over 60% of body content non-actionable; compressing descriptions by 48% and bodies by 39% improved functional quality by 2.8%. Overlapping descriptions in one library are the shadowing problem in miniature, and the fix is to narrow them against each other, not to make each one longer.",
+      "## Failure modes seen in practice",
+      "Skills fail in a small number of repeatable ways, and most of them are the skill being too present rather than too absent.",
+      "| Failure | What it looks like | Evidence | Fix |",
+      "| --- | --- | --- | --- |",
+      "| The skill makes the task worse | Pass rate below the no-skill baseline on tasks the model already handled | 16 of 84 SkillsBench tasks went negative, one by 39 points; 125 functional failures and 182 efficiency regressions catalogued across two benchmarks | Paired eval on every eval; cut sections the baseline did not need |",
+      "| Mandatory ceremony | Checklists and recipes become required work; the largest regression class is excessive verification | Harmful skills are not typically irrelevant but task-appropriate ones that turn guidance into mandatory steps | Describe outcomes and constraints; reserve exact sequences for fragile operations |",
+      "| Over-triggering | The skill fires on unrelated requests and injects the wrong procedure | Shadowing is the dominant cost of a large library | Should-not-fire cases in the trigger eval; narrower, non-overlapping descriptions |",
+      "| Under-triggering | The skill exists and never loads | 26.4% of public skills have no routing description | A pushy description with the request's own keywords; trigger rate measured over repeated runs |",
+      "| Context bloat | Reference material loaded on every invocation | Ungated reference files are the biggest token sink; over 60% of body content non-actionable | Gate references behind links one level deep; scripts executed, not read |",
+      "| Teaching to the test | Pass rate climbs on the evals the author can see and not on new questions | Self-generated skills averaged minus 1.3 points | A held-out split the loop never sees; grade on it once at the end |",
+      "| Harness mismatch | The same skill lands differently in different agents | One harness used skills consistently (+13.9 to +23.3 points); another frequently neglects provided skills | Test every model and harness you ship to |",
+      "| Rot | The skill describes an API or layout that has since changed | Skills break the moment the repo doesn't match what the skill expects | Point at the source of truth; regenerate rather than patch; retire capability skills once the baseline passes |",
+      "The through-line is that a skill is a prior the model cannot easily override. When it is right it substitutes for model capacity: in SkillsBench, Haiku 4.5 with skills (27.7%) beat Opus 4.5 without them (22.0%). When it is wrong, or merely heavier than the task, the same mechanism works against you.",
+      "## Evaluation: what to measure, and the formats compared",
+      "Every serious source agrees on the order of operations: measure the model without the skill first, write the evals before the skill, and gate every change on a paired comparison. Anthropic's guidance says to create evaluations before writing extensive documentation and gives a five-step loop: find the gaps by running tasks with no skill, write three scenarios that test them, establish the baseline, write the minimum that passes, iterate. SkillsBench is the same loop at scale: every task runs with no skill, with the curated skill, and with a self-generated one, under deterministic verifiers.",
+      "**Three things to measure, in this order.**",
+      "1. **Does it trigger when it should, and only then.** A trigger eval is a list of realistic prompts, some that should fire the skill and some that must not, each run several times.",
+      "2. **Does the answer change, on the questions the skill exists for.** Prompt plus expectations, with and without the skill, several attempts a side.",
+      "3. **Does anything else get worse.** The same suite, every eval, not only the targeted ones.",
+      "| Format | Shape | Grader | Best for | Weakness |",
+      "| --- | --- | --- | --- | --- |",
+      "| Expectation list | Prompt plus a list of verifiable sentences | A judge model reads the answer against each expectation; term matching as a fallback | Knowledge and explanation skills | Expectations drift into vocabulary tests unless a judge reads them |",
+      "| Assertions and verifiers | A script or test that inspects the output or the environment | Code | Anything with a checkable end state | Brittle to valid variation; penalises 96.12 against 96.124991 |",
+      "| Rubric | Scored dimensions | A judge, one dimension per call | Open-ended output, pairwise comparison | Needs calibration against a human gold set or it measures the judge |",
+      "| Task outcome | A multi-step task with the final state checked, transcript recorded | Code on the outcome, judge on the transcript | Agentic skills | Expensive; ambiguous tasks produce ambiguous verdicts |",
+      "| Trigger set | Prompts labelled should and should not fire | Code: did the skill load | The description | Says nothing about the body |",
+      "| Paired A/B | Same evals, same model, two versions of the skill | Whatever the suite uses, identical on both sides | Deciding whether an edit ships | Needs enough attempts per side to beat variance |",
+      "The skill-creator's `evals.json` is the common denominator: a skill name, then evals with an integer id, a prompt, a human-readable expected output, optional input files, and expectations as verifiable statements. Grading writes a file with text, passed and evidence per expectation, a summary with a pass rate, execution metrics and timing. A benchmark aggregates runs with and without the skill with mean, standard deviation, min, max and a delta. Anthropic's platform docs show the same idea and note there is no built-in runner: users create their own evaluation system, and evaluations are the source of truth.",
+      "**Writing the expectations.**",
+      "- A good task is one where two domain experts would independently reach the same pass or fail verdict.",
+      "- Expectations are objectively verifiable and read clearly in a results viewer; do not force assertions onto subjective tasks.",
+      "- Do not over-specify the path. Agents regularly find valid approaches eval designers did not anticipate, so grade outcomes and the few steps that matter.",
+      "- Balance the set. A suite that only checks the skill fires when it should produces a skill that fires for everything.",
+      "- Give the judge a way out: an unknown verdict when it lacks the information, and one dimension per judge call rather than one judge for all.",
+      "- Read transcripts. A saturated suite at 100% catches regressions and nothing else; refresh it.",
+      "**Ground the expectations in the source, not in the model.** Deterministic verifiers and claim-level evidence both exist because a judge checking an expectation that is itself wrong produces a confident, wrong number. Where the skill documents a codebase, every expectation should be traceable to a page or a symbol, and an expectation the source contradicts should be dropped rather than graded.",
+      "## Statistical hygiene",
+      "One run of a suite is a sample, not a result, and most published skill numbers are single runs.",
+      "**Run every question more than once and report two numbers.** Report pass@k (at least one of k attempts succeeds) when one success is what matters, and pass^k (all k succeed) when a user gets one attempt and no retry. The gap between them is the finding: a 75% per-trial agent passes all three of three attempts 42% of the time. Three attempts is the floor that makes the two distinguishable.",
+      "**Put an interval on every rate.** A Wilson score interval is the right tool at the sample sizes skills get: a nominal 90% from five trials has an interval wide enough to include 55%, and the normal approximation misbehaves near 0 and 1, which is where eval rates live.",
+      "**Measure the noise floor before claiming a lift.** Run the same configuration twice and record the spread of the per-attempt score. A difference between two skills smaller than that spread is not a difference.",
+      "**Decide what counts as a move before you look.** With three attempts a side, one expectation flipping once is within variance; a rule such as moved only when the gap is two of three, decisive at zero to three, set in advance keeps the verdict from being read off the noise. Fisher's exact test on the two-by-two tells you the floor: at three attempts a side the smallest attainable two-sided p is 0.1, so significance in the textbook sense is out of reach and the pre-set threshold is doing the work.",
+      "**Hold a third out.** Any loop that edits the skill against a score will climb that score. Split the questions before the first edit, iterate on the training split, score the held-out split once at the end, and ship only if the held-out number is within noise of training.",
+      "**Treat the judge as an instrument that drifts.** Keep a human-labelled gold set of 200 to 500 traces per rubric, refreshed quarterly; calibrate monthly with Cohen's kappa and an alert at 0.6; uncalibrated judges drift within 60 to 90 days. Use a different model family from the generator, randomise slot order in pairwise comparisons, penalise verbosity in the rubric, ask for reasoning before the score in a fixed JSON shape, and pin the judge's temperature and version.",
+      "**Count what did not run.** An attempt that errored is not a zero; it is missing. Exclude it from the rate, say how many were missing, and refuse to rank a model that answered under most of the suite. Record provenance with every run so two runs can be told comparable or not.",
+      "## What my own data says",
+      "My suites run every two days across 24 models with the same judge. The table below is one of them: twelve skills for one protocol, 42 questions, the mean pass rate per model with the skill in the system prompt and without.",
+      "| Model | No skill | With the skill |",
+      "| --- | --- | --- |",
+      "| claude-opus-5 | 56% | 99% |",
+      "| claude-opus-5-5 | 76% | 97% |",
+      "| claude-sonnet-5 | 42% | 95% |",
+      "| claude-haiku-4-5 | 11% | 95% |",
+      "| gpt-5.5 | 35% | 92% |",
+      "| gpt-6-astra | 46% | 94% |",
+      "| kimi-k2.6 | 34% | 97% |",
+      "| gpt-oss-120b | 16% | 97% |",
+      "| qwen3.8-27b | 43% | 97% |",
+      "| gemma-4-26b | 38% | 89% |",
+      "| mistral-small-3.1-24b | 11% | 41% |",
+      "| llama-3.3-70b | 8% | 24% |",
+      "| llama-4-scout-17b | 10% | 10% |",
+      "Skills close most of the gap between models. Fifteen of nineteen models score 89% or more with the skill in context; without it the best scores 76% and the median is in the thirties. The models at the bottom are small open-weight models that do not use the material (one is 10% either way), which is the harness-mismatch finding seen from the model side: a skill helps a model that reads it.",
+      "**Loading every skill is worse than loading none.** On an 89-prompt onboarding suite, the layer that put all 43 skills into the prompt scored below the no-skill baseline on 58 of 89 prompts. A router that picks at most three skills from the descriptions, and an oracle that loads the one labelled skill, both land within a point or two of baseline on every frontier model. The router finds the labelled skill on 58 of 89 prompts, a 65% hit rate, which is the Databricks shadowing result reproduced on a 43-skill library.",
+      "**Variance is the size of most reported effects.** Across the published models, between 18 and 53 of 158 questions came out differently on a second or third attempt at a pinned temperature. That is why every run here asks three times, reports pass@3 and pass^3, and treats a one-flip difference as nothing.",
+      "**The judge and the keyword matcher disagree, and the judge is right.** On one security skill the term matcher passed 8 of the 19 expectations the judge rejected: the model used the right words without saying the right thing. An A/B graded by term matching measures vocabulary.",
+      "**Held-out splits catch tuning, and the loop is noisy.** My skill generator drafts a skill from a docs page, iterates on two thirds of its questions and scores the last third once. On the same page, two runs gave opposite verdicts: 81.8% held out against 92.0% in training (rejected), then 100% against 95.8% (accepted). Baseline was 44.4% both times. One run of the loop is not a verdict either.",
+      "**Edits regress things they were not about.** The first paired A/B on a real commit, which clarified where a CLI command works, moved nothing on the expectations it was about and dropped one unrelated expectation on a small model from 3 of 3 attempts to 0 of 3. Run the whole suite, not the part the author was looking at.",
+      "**Fact-check the expectations.** Of 300 claims a reviewer extracted from agent-built integrations, 15 were verified against the docs, 113 contradicted, 172 unverifiable. Expectations written from memory inherit the same error rate.",
+      "## Tooling",
+      "No tool runs the whole loop end to end, and the `evals/evals.json` shape from Anthropic's skill-creator has become the interchange format.",
+      "| Tool | What it covers | Grading |",
+      "| --- | --- | --- |",
+      "| skill-creator (Anthropic) | Draft, with-skill vs baseline runs, assertions, grading, a benchmark viewer, description trigger optimisation | A grader subagent on the expectations; pairwise comparison with a rubric |",
+      "| skill-lens | CI runner for a skill directory; reads `evals/evals.json` | Its own graders; emits JUnit XML, a Markdown summary and an exit code |",
+      "| agent-skills-eval | Spec validation plus an evals runner | Per the agentskills.io guide |",
+      "| skills-ref | Frontmatter and naming validation only | None |",
+      "| promptfoo | Prompt and agent evals from YAML; providers compared side by side | Deterministic assertions plus an LLM rubric |",
+      "| Inspect (UK AISI) | Dataset, solver, scorer; sandboxed multi-turn agents; 200+ benchmarks | Exact, match, model-graded QA and fact, custom |",
+      "What none of them do for you: hold out a split, decide a movement threshold, calibrate the judge against people, or tell you the noise floor. Those are suite design, and they are where the numbers become trustworthy or not.",
+      "## Checklist",
+      "**Before writing**",
+      "- Run the model on five to ten representative tasks with no skill and write down what it got wrong. If nothing, do not write the skill.",
+      "- Write the evals from those failures, as `evals.json` with prompts and verifiable expectations, and check every expectation against the source it comes from.",
+      "- Split the evals before the first draft. A third is held out and never seen by the loop.",
+      "- Measure the baseline, three attempts a question, and record its noise floor.",
+      "**Writing**",
+      "- Description in the third person, what plus when, with the request's own keywords, under 1,024 characters. Write it against the other descriptions in the library so none overlap.",
+      "- Body under 500 lines and under 5,000 tokens; quick start inline, everything else linked one level deep; references over 100 lines get a table of contents.",
+      "- Every paragraph passes the test: would the model get this wrong without it. Delete the ones that do not.",
+      "- Freedom matched to fragility: outcomes and constraints by default, an exact script only where order matters.",
+      "- Deterministic work in scripts the agent runs, with errors handled and constants explained; dependencies listed; MCP tools fully qualified.",
+      "- One default with an escape hatch; consistent terms; no dates; old patterns in a collapsed section.",
+      "**Measuring**",
+      "- Trigger eval: 20 prompts, should and should-not, three runs each, 60/40 split, at most five description rounds.",
+      "- Paired eval on every question of the suite, with and without, three attempts a side, same judge and temperature both sides.",
+      "- Judge reads the answer against each expectation; term matching kept as a second opinion; judge pinned, versioned, calibrated against a human-graded set.",
+      "- A movement threshold set before looking, intervals on every rate, errored attempts reported as missing.",
+      "- Ship only when the held-out number is within noise of training and nothing moved down.",
+      "- Test on every model and harness you ship to; small models show whether the skill carries enough, large ones whether it over-explains.",
+      "**Keeping**",
+      "- Version, review by pull request, gate merges on the suite, keep a rollback.",
+      "- Point at the source of truth rather than copying it; regenerate rather than patch.",
+      "- Re-run the baseline on each new model generation and retire a capability skill the moment it passes without it.",
+      "- Refresh a saturated suite; a 100% suite only catches regressions.",
+      "## Sources",
+      "- Agent Skills specification, agentskills.io/specification",
+      "- Skill authoring best practices, platform.claude.com/docs/en/agents-and-tools/agent-skills/best-practices",
+      "- Equipping agents for the real world with Agent Skills, anthropic.com/engineering",
+      "- Demystifying evals for AI agents, anthropic.com/engineering, January 2026",
+      "- Skills in Claude Code, code.claude.com/docs/en/skills",
+      "- skill-creator and its schemas, github.com/anthropics/skills",
+      "- SkillsBench: Benchmarking How Well Agent Skills Work Across Diverse Tasks, arXiv 2602.12670",
+      "- More Skills, Worse Agents? Skill Shadowing Degrades Performance When Expanding Skill Libraries, Databricks, arXiv 2605.24050",
+      "- SkillComposer: Generative Skill Composition for LLM Agents, arXiv 2606.32025",
+      "- SkillReducer: Optimizing LLM Agent Skills for Token Efficiency, arXiv 2603.29919",
+      "- Agent Skills Can Be Harmful: An Empirical Study of Skill-Induced Failures in LLM Agents, arXiv 2608.11888",
+      "- How to write effective AI agent skills: 6 data-backed practices, Arize",
+      "- What nobody tells you about writing agent skills, PostHog",
+      "- Building skills for AI agents: pitfalls and best practices, Red Hat Emerging Technologies",
+      "- 8 Tips for Writing Agent Skills, Philipp Schmid",
+      "- LLM-as-Judge Best Practices in 2026, Future AGI",
+    ],
+  },
+  {
     id: "p7",
     title: "A documentation-quality system for people and agents: every page, every pipeline, and what each one measures",
     dek: "Forty-one pages, twenty-four jobs, two public boards, and the failures that decided how the numbers are weighed.",
@@ -372,18 +565,23 @@ function renderBody(body) {
 
     // Runs of list items and table rows collapse into one element each.
     if (/^(- |\d+\. )/.test(b)) {
+      // Keyed on the block the run starts at. The loop below leaves `i` on
+      // the block after the run, and keying on that collided with that
+      // block's own key: React warned on every list and table in a piece.
+      const start = i;
       const items = [];
       const ordered = /^\d+\. /.test(b);
       while (i < body.length && /^(- |\d+\. )/.test(body[i])) {
         items.push(body[i].replace(/^(- |\d+\. )/, ""));
         i++;
       }
-      const lis = items.map((t, j) => <li key={j}>{inlineMarkup(t, `${i}-${j}`)}</li>);
-      out.push(ordered ? <ol key={i}>{lis}</ol> : <ul key={i}>{lis}</ul>);
+      const lis = items.map((t, j) => <li key={j}>{inlineMarkup(t, `${start}-${j}`)}</li>);
+      out.push(ordered ? <ol key={start}>{lis}</ol> : <ul key={start}>{lis}</ul>);
       continue;
     }
 
     if (b.startsWith("| ")) {
+      const start = i;
       const rows = [];
       while (i < body.length && body[i].startsWith("| ")) {
         rows.push(body[i]);
@@ -394,18 +592,18 @@ function renderBody(body) {
       const head = sep > 0 ? rows.slice(0, sep).map(splitRow) : [];
       const rest = (sep >= 0 ? rows.slice(sep + 1) : rows).map(splitRow);
       out.push(
-        <div key={i} className="reader-table-wrap">
+        <div key={start} className="reader-table-wrap">
           <table className="reader-table">
             {head.length > 0 && (
               <thead>
                 {head.map((r, ri) => (
-                  <tr key={ri}>{r.map((c, ci) => <th key={ci}>{inlineMarkup(c, `${i}-h${ri}-${ci}`)}</th>)}</tr>
+                  <tr key={ri}>{r.map((c, ci) => <th key={ci}>{inlineMarkup(c, `${start}-h${ri}-${ci}`)}</th>)}</tr>
                 ))}
               </thead>
             )}
             <tbody>
               {rest.map((r, ri) => (
-                <tr key={ri}>{r.map((c, ci) => <td key={ci}>{inlineMarkup(c, `${i}-b${ri}-${ci}`)}</td>)}</tr>
+                <tr key={ri}>{r.map((c, ci) => <td key={ci}>{inlineMarkup(c, `${start}-b${ri}-${ci}`)}</td>)}</tr>
               ))}
             </tbody>
           </table>
